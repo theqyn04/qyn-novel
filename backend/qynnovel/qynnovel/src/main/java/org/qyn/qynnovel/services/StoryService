@@ -1,0 +1,137 @@
+package com.doctruyen.service;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class StoryService {
+    
+    @Autowired
+    private StoryRepository storyRepository;
+    
+    public Page<Story> getAllStories(Pageable pageable) {
+        return storyRepository.findAll(pageable);
+    }
+    
+    public Optional<Story> getStoryById(Long id) {
+        return storyRepository.findById(id);
+    }
+    
+    public Optional<Story> getStoryBySlug(String slug) {
+        return storyRepository.findBySlug(slug);
+    }
+    
+    public Story saveStory(Story story) {
+        return storyRepository.save(story);
+    }
+    
+    public void deleteStory(Long id) {
+        storyRepository.deleteById(id);
+    }
+    
+    public Page<Story> getStoriesByStatus(String status, Pageable pageable) {
+        return storyRepository.findByStatus(status, pageable);
+    }
+    
+    public Page<Story> getStoriesByAuthor(String author, Pageable pageable) {
+        return storyRepository.findByAuthor(author, pageable);
+    }
+    
+    public Page<Story> getStoriesByUserId(Long userId, Pageable pageable) {
+        return storyRepository.findByUserId(userId, pageable);
+    }
+    
+    public Page<Story> searchStories(String keyword, Pageable pageable) {
+        return storyRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+    }
+    
+    public Page<Story> getMostViewedStories(Pageable pageable) {
+        return storyRepository.findByOrderByTotalViewsDesc(pageable);
+    }
+    
+    public Page<Story> getNewestStories(Pageable pageable) {
+        return storyRepository.findByOrderByCreatedAtDesc(pageable);
+    }
+    
+    public Page<Story> getMostLikedStories(Pageable pageable) {
+        return storyRepository.findByOrderByTotalLikesDesc(pageable);
+    }
+    
+    public Page<Story> getStoriesByCategory(Long categoryId, Pageable pageable) {
+        return storyRepository.findByCategoryId(categoryId, pageable);
+    }
+    
+    public Page<Story> getStoriesByCategorySlug(String categorySlug, Pageable pageable) {
+        return storyRepository.findByCategorySlug(categorySlug, pageable);
+    }
+    
+    public Page<Story> advancedSearch(String keyword, Pageable pageable) {
+        return storyRepository.advancedSearch(keyword, pageable);
+    }
+    
+    public Page<Story> getRecentlyUpdatedStories(Pageable pageable) {
+        return storyRepository.findRecentlyUpdated(pageable);
+    }
+    
+    public Page<Story> getCompletedStories(Pageable pageable) {
+        return storyRepository.findCompletedStories(pageable);
+    }
+    
+    public Page<Story> getOngoingStories(Pageable pageable) {
+        return storyRepository.findOngoingStories(pageable);
+    }
+    
+    public Page<Story> getRecommendedStories(Pageable pageable) {
+        return storyRepository.findRecommendedStories(pageable);
+    }
+    
+    public List<Story> getOtherStoriesByAuthor(String author, Long excludeId) {
+        return storyRepository.findOtherStoriesByAuthor(author, excludeId);
+    }
+    
+    public List<Story> getSimilarStories(List<Long> categoryIds, Long excludeId) {
+        return storyRepository.findSimilarStories(categoryIds, excludeId);
+    }
+    
+    @Transactional
+    public void incrementViews(Long storyId) {
+        storyRepository.incrementViews(storyId);
+    }
+    
+    @Transactional
+    public void incrementLikes(Long storyId) {
+        storyRepository.incrementLikes(storyId);
+    }
+    
+    @Transactional
+    public void decrementLikes(Long storyId) {
+        storyRepository.decrementLikes(storyId);
+    }
+    
+    public Long getTotalWordCount(Long storyId) {
+        return storyRepository.getTotalWordCount(storyId);
+    }
+    
+    public Long getChapterCount(Long storyId) {
+        return storyRepository.getChapterCount(storyId);
+    }
+    
+    public Long countByStatus(String status) {
+        return storyRepository.countByStatus(status);
+    }
+    
+    public Long countByCategoryId(Long categoryId) {
+        return storyRepository.countByCategoryId(categoryId);
+    }
+    
+    public Long countByUserId(Long userId) {
+        return storyRepository.countByUserId(userId);
+    }
+}

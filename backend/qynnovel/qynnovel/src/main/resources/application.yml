@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: qynnovel
+  datasource:
+    url: jdbc:mysql://localhost:3306/qynnovel_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: qynnovel_user
+    password: userpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
